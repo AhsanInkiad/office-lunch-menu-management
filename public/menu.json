@@ -1,98 +1,229 @@
 [
     {
-      "id": "60c72b2f9b1d8b3d4c8b4569",
-      "date": "2024-05-26T00:00:00Z",
-      "created_by": "60c72b2f9b1d8b3d4c8b4567",
-      "options": [
-        {
-          "option_id": "1",
-          "option_text": "Chicken Sandwich"
-        },
-        {
-          "option_id": "2",
-          "option_text": "Vegetarian Salad"
-        },
-        {
-          "option_id": "3",
-          "option_text": "Beef Tacos"
-        }
-      ]
+        "id": "60c72b2f9b1d8b3d4c8b4569",
+        "date": "2024-05-26T00:00:00Z",
+        "created_by": "60c72b2f9b1d8b3d4c8b4567",
+        "options": [
+            {
+                "option_id": "1",
+                "option_text": "Chicken Sandwich",
+                "ingredients": [
+                    "Chicken breast",
+                    "Lettuce",
+                    "Tomato",
+                    "Mayonnaise",
+                    "Whole grain bread"
+                ],
+                "image": "https://example.com/images/chicken-sandwich.jpg"
+            },
+            {
+                "option_id": "2",
+                "option_text": "Vegetarian Salad",
+                "ingredients": [
+                    "Lettuce",
+                    "Tomato",
+                    "Cucumber",
+                    "Bell pepper",
+                    "Olives",
+                    "Feta cheese",
+                    "Olive oil",
+                    "Lemon juice"
+                ],
+                "image": "https://example.com/images/vegetarian-salad.jpg"
+            },
+            {
+                "option_id": "3",
+                "option_text": "Beef Tacos",
+                "ingredients": [
+                    "Ground beef",
+                    "Taco shells",
+                    "Lettuce",
+                    "Cheese",
+                    "Sour cream",
+                    "Salsa"
+                ],
+                "image": "https://example.com/images/beef-tacos.jpg"
+            }
+        ]
     },
     {
-      "id": "60c72b2f9b1d8b3d4c8b4570",
-      "date": "2024-05-27T00:00:00Z",
-      "created_by": "60c72b2f9b1d8b3d4c8b4568",
-      "options": [
-        {
-          "option_id": "1",
-          "option_text": "Grilled Cheese Sandwich"
-        },
-        {
-          "option_id": "2",
-          "option_text": "Caesar Salad"
-        },
-        {
-          "option_id": "3",
-          "option_text": "Veggie Burger"
-        }
-      ]
+        "id": "60c72b2f9b1d8b3d4c8b4570",
+        "date": "2024-05-27T00:00:00Z",
+        "created_by": "60c72b2f9b1d8b3d4c8b4568",
+        "options": [
+            {
+                "option_id": "1",
+                "option_text": "Grilled Cheese Sandwich",
+                "ingredients": [
+                    "Cheddar cheese",
+                    "Butter",
+                    "Whole grain bread"
+                ],
+                "image": "https://static01.nyt.com/images/2023/02/28/multimedia/ep-air-fryer-grilled-cheese-vpmf/ep-air-fryer-grilled-cheese-vpmf-square640.jpg"
+            },
+            {
+                "option_id": "2",
+                "option_text": "Caesar Salad",
+                "ingredients": [
+                    "Romaine lettuce",
+                    "Parmesan cheese",
+                    "Croutons",
+                    "Caesar dressing"
+                ],
+                "image": "https://www.recipetineats.com/wp-content/uploads/2016/05/Caesar-Salad_7-SQ.jpg"
+            },
+            {
+                "option_id": "3",
+                "option_text": "Veggie Burger",
+                "ingredients": [
+                    "Veggie patty",
+                    "Lettuce",
+                    "Tomato",
+                    "Onion",
+                    "Whole grain bun"
+                ],
+                "image": "https://i.ytimg.com/vi/a19EY3YNStA/maxresdefault.jpg"
+            }
+        ]
     },
     {
-      "id": "60c72b2f9b1d8b3d4c8b4571",
-      "date": "2024-05-28T00:00:00Z",
-      "created_by": "60c72b2f9b1d8b3d4c8b4569",
-      "options": [
-        {
-          "option_id": "1",
-          "option_text": "Spaghetti Bolognese"
-        },
-        {
-          "option_id": "2",
-          "option_text": "Greek Salad"
-        },
-        {
-          "option_id": "3",
-          "option_text": "Chicken Wrap"
-        }
-      ]
+        "id": "60c72b2f9b1d8b3d4c8b4571",
+        "date": "2024-05-28T00:00:00Z",
+        "created_by": "60c72b2f9b1d8b3d4c8b4569",
+        "options": [
+            {
+                "option_id": "1",
+                "option_text": "Spaghetti Bolognese",
+                "ingredients": [
+                    "Spaghetti",
+                    "Ground beef",
+                    "Tomato sauce",
+                    "Onion",
+                    "Garlic",
+                    "Olive oil",
+                    "Parmesan cheese"
+                ],
+                "image": "https://example.com/images/spaghetti-bolognese.jpg"
+            },
+            {
+                "option_id": "2",
+                "option_text": "Greek Salad",
+                "ingredients": [
+                    "Cucumber",
+                    "Tomato",
+                    "Onion",
+                    "Feta cheese",
+                    "Olives",
+                    "Olive oil",
+                    "Oregano"
+                ],
+                "image": "https://example.com/images/greek-salad.jpg"
+            },
+            {
+                "option_id": "3",
+                "option_text": "Chicken Wrap",
+                "ingredients": [
+                    "Chicken breast",
+                    "Lettuce",
+                    "Tomato",
+                    "Tortilla",
+                    "Mayonnaise"
+                ],
+                "image": "https://example.com/images/chicken-wrap.jpg"
+            }
+        ]
     },
     {
-      "id": "60c72b2f9b1d8b3d4c8b4572",
-      "date": "2024-05-29T00:00:00Z",
-      "created_by": "60c72b2f9b1d8b3d4c8b4568",
-      "options": [
-        {
-          "option_id": "1",
-          "option_text": "BBQ Chicken Pizza"
-        },
-        {
-          "option_id": "2",
-          "option_text": "Quinoa Salad"
-        },
-        {
-          "option_id": "3",
-          "option_text": "Fish Tacos"
-        }
-      ]
+        "id": "60c72b2f9b1d8b3d4c8b4572",
+        "date": "2024-05-29T00:00:00Z",
+        "created_by": "60c72b2f9b1d8b3d4c8b4568",
+        "options": [
+            {
+                "option_id": "1",
+                "option_text": "BBQ Chicken Pizza",
+                "ingredients": [
+                    "Pizza dough",
+                    "Chicken breast",
+                    "BBQ sauce",
+                    "Mozzarella cheese",
+                    "Red onion",
+                    "Cilantro"
+                ],
+                "image": "https://example.com/images/bbq-chicken-pizza.jpg"
+            },
+            {
+                "option_id": "2",
+                "option_text": "Quinoa Salad",
+                "ingredients": [
+                    "Quinoa",
+                    "Cucumber",
+                    "Tomato",
+                    "Onion",
+                    "Olives",
+                    "Feta cheese",
+                    "Olive oil",
+                    "Lemon juice"
+                ],
+                "image": "https://example.com/images/quinoa-salad.jpg"
+            },
+            {
+                "option_id": "3",
+                "option_text": "Fish Tacos",
+                "ingredients": [
+                    "Fish fillets",
+                    "Taco shells",
+                    "Cabbage",
+                    "Sour cream",
+                    "Lime",
+                    "Cilantro"
+                ],
+                "image": "https://example.com/images/fish-tacos.jpg"
+            }
+        ]
     },
     {
-      "id": "60c72b2f9b1d8b3d4c8b4573",
-      "date": "2024-05-30T00:00:00Z",
-      "created_by": "60c72b2f9b1d8b3d4c8b4569",
-      "options": [
-        {
-          "option_id": "1",
-          "option_text": "Pulled Pork Sandwich"
-        },
-        {
-          "option_id": "2",
-          "option_text": "Kale Salad"
-        },
-        {
-          "option_id": "3",
-          "option_text": "Vegetarian Burrito"
-        }
-      ]
+        "id": "60c72b2f9b1d8b3d4c8b4573",
+        "date": "2024-05-30T00:00:00Z",
+        "created_by": "60c72b2f9b1d8b3d4c8b4569",
+        "options": [
+            {
+                "option_id": "1",
+                "option_text": "Pulled Pork Sandwich",
+                "ingredients": [
+                    "Pulled pork",
+                    "BBQ sauce",
+                    "Coleslaw",
+                    "Whole grain bun"
+                ],
+                "image": "https://example.com/images/pulled-pork-sandwich.jpg"
+            },
+            {
+                "option_id": "2",
+                "option_text": "Kale Salad",
+                "ingredients": [
+                    "Kale",
+                    "Apple",
+                    "Walnuts",
+                    "Feta cheese",
+                    "Olive oil",
+                    "Lemon juice"
+                ],
+                "image": "https://example.com/images/kale-salad.jpg"
+            },
+            {
+                "option_id": "3",
+                "option_text": "Vegetarian Burrito",
+                "ingredients": [
+                    "Black beans",
+                    "Rice",
+                    "Lettuce",
+                    "Tomato",
+                    "Cheese",
+                    "Tortilla",
+                    "Sour cream"
+                ],
+                "image": "https://example.com/images/vegetarian-burrito.jpg"
+            }
+        ]
     }
-  ]
-  
+]
