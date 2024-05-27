@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useMenu from '../../../hooks/useMenu';
+import Items from '../Items/Items';
 
 const Menu = () => {
     const [menu, todayMenu, loading] = useMenu();
+    const [selectedItems, setSelectedItems] = useState([]);
+
+    const handleCheckboxChange = (optionId) => {
+        setSelectedItems(prevSelectedItems => {
+            if (prevSelectedItems.includes(optionId)) {
+                // If the option is already selected, remove it
+                return prevSelectedItems.filter(id => id !== optionId);
+            } else {
+                // If the option is not selected, add it
+                return [...prevSelectedItems, optionId];
+            }
+        });
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -20,43 +34,32 @@ const Menu = () => {
             <table className="table">
                 <thead>
                     <tr>
-                        <th>
-                           
-                        </th>
+                        <th></th>
                         <th>Item</th>
                         <th>Ingredients</th>
-                       
                     </tr>
                 </thead>
                 <tbody>
                     {todayMenu && todayMenu.options.map(option => (
-                        <tr key={option.option_id}>
-                            <td>
-                                <label>
-                                    <input type="checkbox" className="checkbox" />
-                                </label>
-                            </td>
-                            <td>
-                                <div className="flex items-center gap-3">
-                                    <div className="avatar">
-                                        <div className="mask mask-squircle w-24 h-24">
-                                            <img src={option.image} alt={option.option_text} />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="font-bold">{option.option_text}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                {option.ingredients.join(', ')}
-                            </td>
-                            
-                        </tr>
+                        <Items
+                            key={option.option_id}
+                            option={option}
+                            handleCheckboxChange={handleCheckboxChange}
+                            isSelected={selectedItems.includes(option.option_id)}
+                        />
                     ))}
                 </tbody>
-                
             </table>
+            <div>
+                <h3>Selected Items:</h3>
+                <ul>
+                    {selectedItems.map(id => {
+                        const option = todayMenu.options.find(opt => opt.option_id === id);
+                        return <li key={id}>{option.option_text}</li>;
+                    })}
+                </ul>
+                <button className='btn btn-outline btn-accent btn-sm'>Confirm</button>
+            </div>
         </div>
     );
 };
