@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useMenu from '../../../hooks/useMenu';
 import Items from '../Items/Items';
+import Cart from '../../../components/Cart/Cart';
 
 const Menu = () => {
     const [menu, todayMenu, loading] = useMenu();
@@ -50,15 +51,24 @@ const Menu = () => {
                     ))}
                 </tbody>
             </table>
-            <div>
-                <h3>Selected Items:</h3>
-                <ul>
-                    {selectedItems.map(id => {
-                        const option = todayMenu.options.find(opt => opt.option_id === id);
-                        return <li key={id}>{option.option_text}</li>;
-                    })}
-                </ul>
-                <button className='btn btn-outline btn-accent btn-sm'>Confirm</button>
+            <div className='m-8 border-2 rounded-md'>
+                <h3 className='text-center mt-4'>Selected Items:</h3>
+                {selectedItems.length === 0 ? (
+                    <p className='text-center mt-4'>Select your food!</p>
+                ) : (
+                    <div className='grid gap-4 grid-cols-3 mt-8 mx-8 py-8 border-4 rounded-lg'>
+                        {selectedItems.map(id => (
+                            <Cart
+                                key={id}
+                                todayMenu={todayMenu}
+                                id={id}
+                            />
+                        ))}
+                    </div>
+                )}
+                <div className='flex justify-center'>
+                    <button className='my-4 btn btn-outline btn-accent btn-sm'>Confirm</button>
+                </div>
             </div>
         </div>
     );
