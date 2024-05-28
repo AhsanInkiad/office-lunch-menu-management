@@ -7,7 +7,7 @@ const Cart = ({ todayMenu, id }) => {
         <div className='flex flex-col justify-center items-center'>
             {option.option_text}
             <div className="mask mask-squircle w-24 h-24 mt-4">
-                <img className="w-full h-full object-cover" src={option.image} alt="" />
+                <img  className="transition-transform duration-300 transform hover:scale-110 w-full h-full object-cover" src={option.image} alt="" />
             </div>
         </div>
     );

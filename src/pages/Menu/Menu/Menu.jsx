@@ -67,7 +67,9 @@ const Menu = () => {
                     </div>
                 )}
                 <div className='flex justify-center'>
-                    <button className='my-4 btn btn-outline btn-accent btn-sm'>Confirm</button>
+                    <button
+                        className={`my-4 btn btn-outline btn-accent btn-sm ${selectedItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        disabled={selectedItems.length === 0}>Confirm</button>
                 </div>
             </div>
         </div>
