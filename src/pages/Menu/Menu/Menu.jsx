@@ -1,24 +1,87 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useMenu from '../../../hooks/useMenu';
 import Items from '../Items/Items';
 import Cart from '../../../components/Cart/Cart';
+import Swal from 'sweetalert2';
+import { AuthContext } from '../../../providers/AuthProvider';
 
 const Menu = () => {
     const [menu, todayMenu, loading] = useMenu();
     const [selectedItems, setSelectedItems] = useState([]);
+    const { user } = useContext(AuthContext);
 
+    // add item in cart via selectedItems and remove item from cart. 
     const handleCheckboxChange = (optionId) => {
         setSelectedItems(prevSelectedItems => {
             if (prevSelectedItems.includes(optionId)) {
+
                 // If the option is already selected, remove it
                 return prevSelectedItems.filter(id => id !== optionId);
             } else {
+
                 // If the option is not selected, add it
                 return [...prevSelectedItems, optionId];
             }
+
         });
     };
+
+    const handleConfirm = () => {
+        console.log(selectedItems);
+        const currentDate = new Date(todayMenu.date).toLocaleDateString();
+        const orderItem = {date: currentDate, email: user.email, name: user.displayName, ordered: selectedItems}
+        if (user && user.email) {
+            fetch('http://localhost:5000/order',{
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(orderItem)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.insertedId) {
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, confirm order!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: "Order placed!",
+                                    text: "Your order has been recorded.",
+                                    icon: "success"
+                                });
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "You must login to order.",
+                            showClass: {
+                              popup: `
+                                animate__animated
+                                animate__fadeInUp
+                                animate__faster
+                              `
+                            },
+                            hideClass: {
+                              popup: `
+                                animate__animated
+                                animate__fadeOutDown
+                                animate__faster
+                              `
+                            }
+                          });
+                    }
+                })
+        }
+
+    }
 
     if (loading) {
         return <p>Loading...</p>;
@@ -58,6 +121,8 @@ const Menu = () => {
                 ) : (
                     <div className='grid gap-4 grid-cols-3 mt-8 mx-8 py-8 border-4 rounded-lg'>
                         {selectedItems.map(id => (
+
+                            // Cart is in components folder
                             <Cart
                                 key={id}
                                 todayMenu={todayMenu}
@@ -67,7 +132,7 @@ const Menu = () => {
                     </div>
                 )}
                 <div className='flex justify-center'>
-                    <button
+                    <button onClick={handleConfirm}
                         className={`my-4 btn btn-outline btn-accent btn-sm ${selectedItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                         disabled={selectedItems.length === 0}>Confirm</button>
                 </div>
