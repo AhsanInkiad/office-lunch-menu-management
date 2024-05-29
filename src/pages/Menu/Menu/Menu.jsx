@@ -11,7 +11,7 @@ const Menu = () => {
     const [selectedItems, setSelectedItems] = useState([]);
     const { user } = useContext(AuthContext);
 
-        console.log("today menu", todayMenu);
+    console.log("today menu", todayMenu);
     // add item in cart via selectedItems and remove item from cart. 
     const handleCheckboxChange = (optionId) => {
         setSelectedItems(prevSelectedItems => {
