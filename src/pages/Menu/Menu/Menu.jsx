@@ -30,58 +30,65 @@ const Menu = () => {
     const handleConfirm = () => {
         console.log(selectedItems);
         const currentDate = new Date(todayMenu.date).toLocaleDateString();
-        const orderItem = {date: currentDate, email: user.email, name: user.displayName, ordered: selectedItems}
+        const orderItem = { date: currentDate, email: user.email, name: user.displayName, ordered: selectedItems };
+
         if (user && user.email) {
-            fetch('http://localhost:5000/order',{
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(orderItem)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.insertedId) {
-                        Swal.fire({
-                            title: "Are you sure?",
-                            text: "You won't be able to revert this!",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#3085d6",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Yes, confirm order!"
-                        }).then((result) => {
-                            if (result.isConfirmed) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, confirm order!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Proceed to store the data in the database
+                    fetch('http://localhost:5000/order', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(orderItem)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.insertedId) {
                                 Swal.fire({
                                     title: "Order placed!",
                                     text: "Your order has been recorded.",
                                     icon: "success"
                                 });
+                            } else {
+                                Swal.fire({
+                                    title: "Error",
+                                    text: "There was an issue with your order. Please try again.",
+                                    icon: "error",
+                                    confirmButtonText: "OK"
+                                });
                             }
+                        })
+                        .catch(error => {
+                            console.error('Error placing order:', error);
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'There was an error placing your order. Please try again.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
                         });
-                    } else {
-                        Swal.fire({
-                            title: "You must login to order.",
-                            showClass: {
-                              popup: `
-                                animate__animated
-                                animate__fadeInUp
-                                animate__faster
-                              `
-                            },
-                            hideClass: {
-                              popup: `
-                                animate__animated
-                                animate__fadeOutDown
-                                animate__faster
-                              `
-                            }
-                          });
-                    }
-                })
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'You must login to order.',
+                text: 'Please login to place your order.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
         }
+    };
 
-    }
 
     if (loading) {
         return <p>Loading...</p>;
