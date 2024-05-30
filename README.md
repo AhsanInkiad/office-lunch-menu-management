@@ -16,7 +16,7 @@ The Office Lunch Menu Management System is a web application built using MERN st
 
 ## Demo:
 
-**Website Link (Client Side)**: https://665883328484c01676e45117--kaleidoscopic-starburst-be71ac.netlify.app/
+**Website Link (Client Side)**: https://6658d1a07ea6b05c7661455d--kaleidoscopic-starburst-be71ac.netlify.app/
 
 **Serve Side:** https://office-lunch-menu-management-server.vercel.app/
 
