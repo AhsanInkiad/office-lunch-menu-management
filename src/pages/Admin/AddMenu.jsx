@@ -66,7 +66,7 @@ const AddMenu = () => {
             confirmButtonText: "Yes, confirm menu!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch('http://localhost:5000/menu', {
+                fetch('https://office-lunch-menu-management-server.vercel.app/menu', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

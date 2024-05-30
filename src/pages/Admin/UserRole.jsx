@@ -7,7 +7,7 @@ const UserRole = () => {
     const { data: user = [], refetch } = useQuery({
         queryKey: 'user',
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/user');
+            const res = await fetch('https://office-lunch-menu-management-server.vercel.app/user');
             return res.json();
         }
     });
@@ -15,7 +15,7 @@ const UserRole = () => {
     
 
     const handleMakeAdmin = user => {
-        fetch(`http://localhost:5000/user/admin/${user._id}`, {
+        fetch(`https://office-lunch-menu-management-server.vercel.app/user/admin/${user._id}`, {
             method: 'PATCH'
         })
         .then(res => res.json())

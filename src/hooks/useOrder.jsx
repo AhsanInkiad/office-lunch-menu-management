@@ -4,7 +4,7 @@ const useOrder = () => {
     const [totalOrder, setTotalOrder] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/order')
+        fetch('https://office-lunch-menu-management-server.vercel.app/order')
             .then(res => res.json())
             .then(data => {
                 setTotalOrder(data);

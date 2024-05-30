@@ -9,7 +9,7 @@ const useAdmin = () => {
         queryKey: ['isAdmin', user?.email],
         queryFn: async () => {
             if (!user?.email) return false; // Handle case when user is not logged in
-            const res = await fetch(`http://localhost:5000/user/admin/${user.email}`);
+            const res = await fetch(`https://office-lunch-menu-management-server.vercel.app/user/admin/${user.email}`);
             const data = await res.json();
             return data.admin;
         }

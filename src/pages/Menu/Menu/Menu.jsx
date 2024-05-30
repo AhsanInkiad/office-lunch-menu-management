@@ -50,7 +50,7 @@ const Menu = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Proceed to store the data in the database
-                    fetch('http://localhost:5000/order', {
+                    fetch('https://office-lunch-menu-management-server.vercel.app/order', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

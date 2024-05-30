@@ -24,7 +24,7 @@ const SignUp = () => {
                         console.log('user profile info updated.')
                         const saveUser = {name: data.name, email: data.email}
                         // sending user data in database
-                        fetch('http://localhost:5000/user', {
+                        fetch('https://office-lunch-menu-management-server.vercel.app/user', {
                             method: 'POST',
                             headers: {
                                 'content-type':'application/json'

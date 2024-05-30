@@ -7,7 +7,7 @@ const useMenu = () => {
     const [todayMenu, setTodayMenu] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:5000/menu')
+        fetch('https://office-lunch-menu-management-server.vercel.app/menu')
             .then(res => res.json())
             .then(data => {
                 setMenu(data);

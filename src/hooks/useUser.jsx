@@ -5,7 +5,7 @@ const useUser = () => {
        const [totalUser, setTotalUser] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/user')
+        fetch('https://office-lunch-menu-management-server.vercel.app/user')
             .then(res => res.json())
             .then(data => {
                 setTotalUser(data);
