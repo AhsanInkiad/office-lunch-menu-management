@@ -5,29 +5,34 @@ import Items from '../Items/Items';
 import Cart from '../../../components/Cart/Cart';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../../providers/AuthProvider';
+import useOrder from '../../../hooks/useOrder';
 
 const Menu = () => {
     const [menu, todayMenu, loading] = useMenu();
     const [selectedItems, setSelectedItems] = useState([]);
     const { user } = useContext(AuthContext);
+    const [totalOrder] = useOrder();
 
-    console.log("today menu", todayMenu);
-    // add item in cart via selectedItems and remove item from cart. 
+    // Check if the user has already ordered for the current date
+    const hasOrderedToday = totalOrder.some(order => {
+        const orderDate = new Date(order.date).toLocaleDateString();
+        const currentDate = new Date().toLocaleDateString();
+        return orderDate === currentDate && order.email === user?.email;
+    });
+
+    // Function to handle checkbox change
     const handleCheckboxChange = (optionId) => {
+        // Add or remove the selected item
         setSelectedItems(prevSelectedItems => {
             if (prevSelectedItems.includes(optionId)) {
-
-                // If the option is already selected, remove it
                 return prevSelectedItems.filter(id => id !== optionId);
             } else {
-
-                // If the option is not selected, add it
                 return [...prevSelectedItems, optionId];
             }
-
         });
     };
 
+    // Function to handle order confirmation
     const handleConfirm = () => {
         console.log(selectedItems);
         const currentDate = new Date(todayMenu.date).toLocaleDateString();
@@ -59,6 +64,9 @@ const Menu = () => {
                                     title: "Order placed!",
                                     text: "Your order has been recorded.",
                                     icon: "success"
+                                }).then(() => {
+                                    
+                                    window.location.reload();
                                 });
                             } else {
                                 Swal.fire({
@@ -88,20 +96,23 @@ const Menu = () => {
                 confirmButtonText: 'OK'
             });
         }
+         // Reload the page after order confirmation
+         
     };
 
-
+    // If loading, display a loading message
     if (loading) {
         return <p>Loading...</p>;
     }
 
+    // Render the menu
     return (
         <div className="overflow-x-auto">
             <Helmet>
                 <title>Office Lunch | Menu</title>
             </Helmet>
-            <h2>This is the menu page. Total menus: {menu.length}</h2>
-            <h2>Today's menu: {new Date(todayMenu.date).toLocaleDateString()}</h2>
+            
+            <h2 className='text-center text-xl my-4 font-semibold'>Today's menu: ({new Date(todayMenu.date).toLocaleDateString()})</h2>
 
             <table className="table">
                 <thead>
@@ -129,7 +140,6 @@ const Menu = () => {
                 ) : (
                     <div className='grid gap-4 grid-cols-3 mt-8 mx-8 py-8 border-4 rounded-lg'>
                         {selectedItems.map(id => (
-
                             // Cart is in components folder
                             <Cart
                                 key={id}
@@ -140,9 +150,14 @@ const Menu = () => {
                     </div>
                 )}
                 <div className='flex justify-center'>
-                    <button onClick={handleConfirm}
-                        className={`my-4 btn btn-outline btn-accent btn-sm ${selectedItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        disabled={selectedItems.length === 0}>Confirm</button>
+                    {/* Conditionally render either the confirm button or the message */}
+                    {hasOrderedToday ? (
+                        <p className="my-4 text-red-500 font-semibold">You have already ordered for today.</p>
+                    ) : (
+                        <button onClick={handleConfirm}
+                            className={`my-4 btn btn-outline btn-accent btn-sm ${selectedItems.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            disabled={selectedItems.length === 0}>Confirm</button>
+                    )}
                 </div>
             </div>
         </div>

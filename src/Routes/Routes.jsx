@@ -8,6 +8,8 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import AddMenu from "../pages/Admin/AddMenu";
+import UserRole from "../pages/Admin/UserRole";
+import MoreStats from "../pages/Admin/MoreStats";
 
  export const router = createBrowserRouter([
     {
@@ -33,6 +35,14 @@ import AddMenu from "../pages/Admin/AddMenu";
         {
           path: 'addmenu',
           element: <AddMenu></AddMenu>
+        },
+        {
+          path: 'userrole',
+          element: <UserRole></UserRole>
+        },
+        {
+          path: 'morestats',
+          element: <MoreStats></MoreStats>
         }
       ]
     },

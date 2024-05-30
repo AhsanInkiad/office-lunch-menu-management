@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import useMenu from '../../hooks/useMenu';
 
 const AddMenu = () => {
     const [date, setDate] = useState('');
@@ -7,6 +8,8 @@ const AddMenu = () => {
     const [options, setOptions] = useState([
         { option_id: '1', option_text: '', ingredients: '', image: '' }
     ]);
+
+    const [menu] = useMenu();
 
     const handleOptionChange = (index, event) => {
         const updatedOptions = [...options];
@@ -41,6 +44,18 @@ const AddMenu = () => {
             }))
         };
 
+        const existingMenu = menu.find(m => new Date(m.date).toLocaleDateString() === new Date(date).toLocaleDateString());
+        
+        if (existingMenu) {
+            Swal.fire({
+                title: "Menu already exists!",
+                text: "A menu for the selected date already exists. Please choose a different date.",
+                icon: "warning",
+                confirmButtonText: "OK"
+            });
+            return;
+        }
+
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -58,32 +73,35 @@ const AddMenu = () => {
                     },
                     body: JSON.stringify(addMenu)
                 })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.insertedId) {
-                            Swal.fire({
-                                title: "Menu added!",
-                                text: "Your menu has been recorded.",
-                                icon: "success"
-                            });
-                        } else {
-                            Swal.fire({
-                                title: "Error",
-                                text: "There was an issue with adding the menu. Please try again.",
-                                icon: "error",
-                                confirmButtonText: "OK"
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error adding menu:', error);
+                .then(res => res.json())
+                .then(data => {
+                    if (data.insertedId) {
                         Swal.fire({
-                            title: 'Error',
-                            text: 'There was an error adding your menu. Please try again.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
+                            title: "Menu added!",
+                            text: "Your menu has been recorded.",
+                            icon: "success"
+                        }).then(() => {
+                                    
+                            window.location.reload();
                         });
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: "There was an issue with adding the menu. Please try again.",
+                            icon: "error",
+                            confirmButtonText: "OK"
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding menu:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'There was an error adding your menu. Please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
                     });
+                });
             }
         });
     };
@@ -91,86 +109,89 @@ const AddMenu = () => {
     const today = new Date().toISOString().split('T')[0];
 
     return (
-        <div className="my-10 max-w-4xl mx-auto p-6 bg-white rounded-md shadow-md">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4">Add New Menu</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label className="block text-gray-600">Date:</label>
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        min={today}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-600">Created By:</label>
-                    <input
-                        type="text"
-                        value={createdBy}
-                        onChange={(e) => setCreatedBy(e.target.value)}
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
-                    />
-                </div>
-                {options.map((option, index) => (
-                    <div key={index} className="mb-6">
-                        <h3 className="text-xl font-semibold text-gray-700 mb-2">Option {index + 1}</h3>
-                        <label className="block text-gray-600">Option ID:</label>
+        <div>
+            <div className="my-10 max-w-4xl mx-auto p-6 bg-gray-800 rounded-md shadow-md">
+                <h2 className="text-2xl font-semibold text-white mb-4">Add New Menu</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4 ">
+                        <label className="block text-white">Date:</label>
                         <input
-                            type="text"
-                            name="option_id"
-                            value={option.option_id}
-                            readOnly
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-200 focus:outline-none focus:ring focus:ring-indigo-200 mb-2"
-                        />
-                        <label className="block text-gray-600">Option Text (Food Name):</label>
-                        <input
-                            type="text"
-                            name="option_text"
-                            value={option.option_text}
-                            onChange={(e) => handleOptionChange(index, e)}
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            min={today}
                             required
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 mb-2"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
                         />
-                        <label className="block text-gray-600">Ingredients (comma separated):</label>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-white">Created By:</label>
                         <input
                             type="text"
-                            name="ingredients"
-                            value={option.ingredients}
-                            onChange={(e) => handleOptionChange(index, e)}
+                            value={createdBy}
+                            onChange={(e) => setCreatedBy(e.target.value)}
                             required
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 mb-2"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
                         />
-                        <label className="block text-gray-600">Food Image URL:</label>
-                        <input
-                            type="text"
-                            name="image"
-                            value={option.image}
-                            onChange={(e) => handleOptionChange(index, e)}
-                            required
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 mb-2"
-                        />
-                        <button
-                            type="button"
-                            onClick={() => removeOption(index)}
-                            className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
-                        >
-                            Remove Option
+                    </div>
+                    {options.map((option, index) => (
+                        // Options div
+                        <div key={index} className="border-2 rounded-xl p-8 mb-6">
+                            <h3 className="text-xl font-semibold text-white mb-2">Option {index + 1}</h3>
+                            <label className="block text-white">Option ID:</label>
+                            <input
+                                type="text"
+                                name="option_id"
+                                value={option.option_id}
+                                readOnly
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-200 focus:outline-none focus:ring focus:ring-indigo-200 mb-2"
+                            />
+                            <label className="block text-white">Option Text (Food Name):</label>
+                            <input
+                                type="text"
+                                name="option_text"
+                                value={option.option_text}
+                                onChange={(e) => handleOptionChange(index, e)}
+                                required
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 mb-2"
+                            />
+                            <label className="block text-white">Ingredients (comma separated):</label>
+                            <input
+                                type="text"
+                                name="ingredients"
+                                value={option.ingredients}
+                                onChange={(e) => handleOptionChange(index, e)}
+                                required
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 mb-2"
+                            />
+                            <label className="block text-white">Food Image URL:</label>
+                            <input
+                                type="text"
+                                name="image"
+                                value={option.image}
+                                onChange={(e) => handleOptionChange(index, e)}
+                                required
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 mb-2"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => removeOption(index)}
+                                className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300"
+                            >
+                                Remove Option
+                            </button>
+                        </div>
+                    ))}
+                    <div className="flex justify-between items-center mb-4">
+                        <button type="button" onClick={addOption} className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-300">
+                            Add Another Option
+                        </button>
+                        <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300">
+                            Submit Menu
                         </button>
                     </div>
-                ))}
-                <div className="flex justify-between items-center mb-4">
-                    <button type="button" onClick={addOption} className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-300">
-                        Add Another Option
-                    </button>
-                    <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:ring-green-300">
-                        Add Menu
-                    </button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     );
 };
